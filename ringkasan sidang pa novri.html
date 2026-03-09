@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLOW PLS-SEM - Sidang Tesis Novriansyah</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        
+        h2 {
+            color: #444;
+            margin: 25px 0 15px 0;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        h3 {
+            color: #555;
+            margin: 15px 0 10px 0;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 5px;
+            font-size: 1.1em;
+        }
+        
+        .author {
+            text-align: center;
+            color: #764ba2;
+            font-weight: bold;
+            margin-bottom: 30px;
+            font-size: 1.2em;
+        }
+        
+        /* Explanation Cards */
+        .explanation-card {
+            background: #f0f4ff;
+            border-left: 5px solid #667eea;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .explanation-title {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+        }
+        
+        .explanation-text {
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .explanation-example {
+            background: #e8f5e9;
+            border-left: 5px solid #28a745;
+            padding: 10px 15px;
+            margin-top: 10px;
+            border-radius: 0 5px 5px 0;
+            font-style: italic;
+        }
+        
+        /* Interpretation Box */
+        .interpretation-box {
+            background: #e3f2fd;
+            border: 2px solid #2196f3;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 10px;
+            font-weight: 500;
+        }
+        
+        .interpretation-box:before {
+            content: "📌 INTERPRETASI: ";
+            font-weight: bold;
+            color: #2196f3;
+        }
+        
+        /* Flow Diagram */
+        .flow-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 40px 0;
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .flow-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 10px 0;
+            width: 100%;
+        }
+        
+        .flow-box {
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            padding: 15px 25px;
+            margin: 10px;
+            text-align: center;
+            font-weight: bold;
+            color: #333;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            min-width: 200px;
+        }
+        
+        .flow-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(102, 126, 234, 0.3);
+        }
+        
+        .flow-box.start {
+            background: #28a745;
+            border-color: #28a745;
+            color: white;
+        }
+        
+        .flow-box.end {
+            background: #dc3545;
+            border-color: #dc3545;
+            color: white;
+        }
+        
+        .flow-box.process {
+            background: #17a2b8;
+            border-color: #17a2b8;
+            color: white;
+        }
+        
+        .flow-box.decision {
+            background: #ffc107;
+            border-color: #ffc107;
+            color: #333;
+        }
+        
+        .flow-arrow {
+            font-size: 30px;
+            color: #667eea;
+            margin: 0 10px;
+        }
+        
+        .flow-arrow-down {
+            font-size: 30px;
+            color: #667eea;
+            display: block;
+            margin: 10px 0;
+        }
+        
+        /* Simple IPO Flow */
+        .ipo-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        
+        .ipo-box {
+            flex: 1;
+            min-width: 250px;
+            margin: 15px;
+            padding: 30px 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+        
+        .ipo-box:hover {
+            transform: scale(1.05);
+        }
+        
+        .ipo-box.input {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .ipo-box.process {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+        
+        .ipo-box.output {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+        
+        .ipo-icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+        
+        .ipo-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .ipo-list {
+            text-align: left;
+            padding-left: 20px;
+        }
+        
+        .ipo-list li {
+            margin: 10px 0;
+            font-size: 14px;
+        }
+        
+        /* Tables */
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        tr:hover {
+            background: #f5f5f5;
+        }
+        
+        .status-valid {
+            color: #28a745;
+            font-weight: bold;
+            background: #d4edda;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        
+        .status-warning {
+            color: #856404;
+            background: #fff3cd;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        
+        .status-danger {
+            color: #721c24;
+            background: #f8d7da;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .formula {
+            background: #2d3748;
+            color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.2em;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .insight-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: 500;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+        
+        .badge-success {
+            background: #28a745;
+            color: white;
+        }
+        
+        .badge-warning {
+            background: #ffc107;
+            color: #333;
+        }
+        
+        .badge-danger {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .badge-primary {
+            background: #17a2b8;
+            color: white;
+        }
+        
+        .tab-container {
+            display: flex;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .tab-button {
+            padding: 10px 20px;
+            background: #f0f0f0;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            margin-right: 5px;
+            border-radius: 5px 5px 0 0;
+        }
+        
+        .tab-button.active {
+            background: #667eea;
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 0 5px 5px 5px;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .best-model {
+            border: 3px solid gold;
+            background: #fff9e6;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+        
+        .function-box {
+            background: #e3f2fd;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 FLOW PROSES PENGUJIAN PLS-SEM</h1>
+        <div class="subtitle">Pemodelan Kompetensi SDM pada Lembaga Perlindungan Konsumen di Daerah Khusus Jakarta</div>
+        <div class="author">Novriansyah (92224016) - Magister Manajemen</div>
+
+        <!-- SIMPLE IPO FLOW (INPUT-PROSES-OUTPUT) -->
+        <div class="ipo-container">
+            <div class="ipo-box input">
+                <div class="ipo-icon">📥</div>
+                <div class="ipo-title">INPUT</div>
+                <ul class="ipo-list">
+                    <li><strong>125 Responden</strong> (BPKN, BPSK, LPKSM)</li>
+                    <li>8 Variabel Laten</li>
+                    <li>80 Indikator</li>
+                    <li>Skala Likert 1-4</li>
+                    <li>Data Primer Kuesioner</li>
+                </ul>
+            </div>
+            
+            <div class="ipo-box process">
+                <div class="ipo-icon">⚙️</div>
+                <div class="ipo-title">PROSES</div>
+                <ul class="ipo-list">
+                    <li><strong>PLS-SEM (SmartPLS)</strong></li>
+                    <li>Outer Model (Validitas & Reliabilitas)</li>
+                    <li>Inner Model (R², Q², GoF)</li>
+                    <li>Bootstrapping (Uji Hipotesis)</li>
+                    <li>Path Analysis</li>
+                </ul>
+            </div>
+            
+            <div class="ipo-box output">
+                <div class="ipo-icon">📤</div>
+                <div class="ipo-title">OUTPUT</div>
+                <ul class="ipo-list">
+                    <li><strong>Model Kompetensi SDM</strong></li>
+                    <li>R² = 74,4% (Kuat)</li>
+                    <li>Q² = 85,2% (Prediktif)</li>
+                    <li>GoF = 0,662 (Sangat Fit)</li>
+                    <li>19/19 Hipotesis Diterima</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- PENJELASAN FUNGSI UJI -->
+        <div class="card">
+            <h2>📚 PENJELASAN FUNGSI UJI STATISTIK</h2>
+            
+            <div class="explanation-card">
+                <div class="explanation-title">🔍 1. UJI VALIDITAS KONVERGEN (Loading Factor)</div>
+                <div class="explanation-text">
+                    <strong>Fungsi:</strong> Mengukur sejauh mana indikator (item pertanyaan) benar-benar mencerminkan variabel laten (konstruk) yang sama. 
+                </div>
+                <div class="explanation-example">
+                    <strong>Contoh:</strong> Untuk variabel "Motivasi", ada 10 pertanyaan. Uji ini memastikan bahwa semua 10 pertanyaan tersebut benar-benar mengukur motivasi, bukan mengukur hal lain.
+                    <br><strong>Kriteria:</strong> Loading Factor ≥ 0,7.
+                </div>
+            </div>
+
+            <div class="explanation-card">
+                <div class="explanation-title">📊 2. AVERAGE VARIANCE EXTRACTED (AVE)</div>
+                <div class="explanation-text">
+                    <strong>Fungsi:</strong> Menunjukkan persentase rata-rata varians (keragaman) dari indikator yang dapat dijelaskan oleh konstruk laten.
+                </div>
+                <div class="explanation-example">
+                    <strong>Contoh:</strong> AVE untuk Kompetensi SDM = 0,792 (79,2%). Artinya, 79,2% informasi dari indikator kompetensi SDM dapat dijelaskan oleh variabel Kompetensi SDM itu sendiri.
+                    <br><strong>Kriteria:</strong> AVE ≥ 0,5.
+                </div>
+            </div>
+
+            <div class="explanation-card">
+                <div class="explanation-title">🔄 3. UJI VALIDITAS DISKRIMINAN (Cross Loading)</div>
+                <div class="explanation-text">
+                    <strong>Fungsi:</strong> Memastikan bahwa setiap indikator hanya menjadi milik satu konstruk saja (tidak tumpang tindih antar konstruk).
+                </div>
+                <div class="explanation-example">
+                    <strong>Contoh:</strong> Indikator PK1 harusnya lebih tinggi korelasinya dengan variabel Pengalaman Kerja dibanding dengan variabel lain.
+                    <br><strong>Kriteria:</strong> Loading ke konstruk sendiri > loading ke konstruk lain.
+                </div>
+            </div>
+
+            <div class="explanation-card">
+                <div class="explanation-title">⚖️ 4. UJI RELIABILITAS (Cronbach's Alpha & Composite Reliability)</div>
+                <div class="explanation-text">
+                    <strong>Fungsi:</strong> Mengukur konsistensi internal atau keandalan instrumen (apakah jawaban responden konsisten).
+                </div>
+                <div class="explanation-example">
+                    <strong>Contoh:</strong> Cronbach's Alpha Kompetensi SDM = 0,971. Ini menunjukkan bahwa responden menjawab dengan pola yang konsisten.
+                    <br><strong>Kriteria:</strong> Cronbach's α ≥ 0,6 | CR ≥ 0,7.
+                </div>
+            </div>
+
+            <div class="explanation-card">
+                <div class="explanation-title">🚫 5. UJI MULTIKOLINIERITAS (VIF)</div>
+                <div class="explanation-text">
+                    <strong>Fungsi:</strong> Mendeteksi apakah ada korelasi yang terlalu tinggi antar variabel independen (eksogen).
+                </div>
+                <div class="explanation-example">
+                    <strong>Contoh:</strong> VIF Pengalaman Kerja = 1,216. Artinya, tidak ada korelasi bermasalah antar variabel bebas.
+                    <br><strong>Kriteria:</strong> VIF < 5.
+                </div>
+            </div>
+
+            <div class="explanation-card">
+                <div class="explanation-title">📈 6. R-SQUARE (R²) - Koefisien Determinasi</div>
+                <div class="explanation-text">
+                    <strong>Fungsi:</strong> Mengukur seberapa besar variabel independen mampu menjelaskan variabel dependen.
+                </div>
+                <div class="explanation-example">
+                    <strong>Contoh:</strong> R² Kompetensi SDM = 0,744. Artinya, 74,4% perubahan Kompetensi SDM dapat dijelaskan oleh model.
+                    <br><strong>Kriteria:</strong> >0,67 = Kuat, 0,33-0,67 = Moderat, <0,33 = Lemah.
+                </div>
+            </div>
+
+            <div class="explanation-card">
+                <div class="explanation-title">🔮 7. PREDICTIVE RELEVANCE (Q²)</div>
+                <div class="explanation-text">
+                    <strong>Fungsi:</strong> Menguji seberapa baik model dapat memprediksi data di luar sampel.
+                </div>
+                <div class="explanation-example">
+                    <strong>Contoh:</strong> Q² = 0,852. Artinya, model memiliki kemampuan prediktif sangat kuat.
+                    <br><strong>Kriteria:</strong> Q² > 0 = memiliki predictive relevance.
+                </div>
+            </div>
+
+            <div class="explanation-card">
+                <div class="explanation-title">🎯 8. GOODNESS OF FIT (GoF)</div>
+                <div class="explanation-text">
+                    <strong>Fungsi:</strong> Menilai kesesuaian keseluruhan model dengan data empiris.
+                </div>
+                <div class="explanation-example">
+                    <strong>Contoh:</strong> GoF = 0,662. Artinya, model penelitian sangat fit dengan data lapangan.
+                    <br><strong>Kriteria:</strong> 0,1 = kecil, 0,25 = sedang, >0,36 = besar.
+                </div>
+            </div>
+
+            <div class="explanation-card">
+                <div class="explanation-title">✅ 9. PATH COEFFICIENTS (Uji Hipotesis)</div>
+                <div class="explanation-text">
+                    <strong>Fungsi:</strong> Menguji apakah hubungan antar variabel signifikan secara statistik.
+                </div>
+                <div class="explanation-example">
+                    <strong>Contoh:</strong> Pengaruh Kebijakan Pemerintah ke Kompetensi SDM = 0,322 dengan t-stat 6,173 (>1,96). Artinya, Kebijakan Pemerintah terbukti mempengaruhi Kompetensi SDM.
+                    <br><strong>Kriteria:</strong> t-stat > 1,96 | p-value < 0,05.
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="tab-container">
+            <button class="tab-button active" onclick="openTab(event, 'flow')">📈 Flow Diagram</button>
+            <button class="tab-button" onclick="openTab(event, 'outer')">🔍 Outer Model</button>
+            <button class="tab-button" onclick="openTab(event, 'inner')">🏗️ Inner Model</button>
+            <button class="tab-button" onclick="openTab(event, 'hypothesis')">✅ Uji Hipotesis</button>
+            <button class="tab-button" onclick="openTab(event, 'results')">🎯 Hasil Akhir</button>
+        </div>
+
+        <!-- TAB 1: FLOW DIAGRAM -->
+        <div id="flow" class="tab-content active">
+            <h2>📈 Diagram Alir Analisis PLS-SEM</h2>
+            
+            <div class="flow-container">
+                <div class="flow-row">
+                    <div class="flow-box start">📥 INPUT<br>125 Responden</div>
+                </div>
+                <div class="flow-arrow-down">↓</div>
+                
+                <div class="flow-row">
+                    <div class="flow-box process">🔍 OUTER MODEL<br>(Uji Validitas & Reliabilitas)</div>
+                </div>
+                <div class="flow-arrow-down">↓</div>
+                
+                <div class="flow-row">
+                    <div class="flow-box process">Loading Factor ≥ 0,7</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-box process">AVE ≥ 0,5</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-box process">Cross Loading</div>
+                </div>
+                <div class="flow-row">
+                    <div class="flow-box process">Cronbach's α ≥ 0,6</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-box process">CR ≥ 0,7</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-box process">VIF < 5</div>
+                </div>
+                <div class="flow-arrow-down">↓</div>
+                
+                <div class="flow-row">
+                    <div class="flow-box decision">⚠️ SEMUA KRITERIA TERPENUHI?</div>
+                </div>
+                <div class="flow-arrow-down">↓</div>
+                
+                <div class="flow-row">
+                    <div class="flow-box process">✅ VALID & RELIABEL</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-box process">🚫 Eliminasi Indikator</div>
+                </div>
+                <div class="flow-arrow-down">↓</div>
+                
+                <div class="flow-row">
+                    <div class="flow-box process">📊 INNER MODEL<br>(Uji Struktural)</div>
+                </div>
+                <div class="flow-arrow-down">↓</div>
+                
+                <div class="flow-row">
+                    <div class="flow-box process">R-Square (R²)</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-box process">Q-Square (Q²)</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-box process">Goodness of Fit (GoF)</div>
+                </div>
+                <div class="flow-arrow-down">↓</div>
+                
+                <div class="flow-row">
+                    <div class="flow-box process">🔄 BOOTSTRAPPING</div>
+                </div>
+                <div class="flow-arrow-down">↓</div>
+                
+                <div class="flow-row">
+                    <div class="flow-box process">Path Coefficients</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-box process">Specific Indirect Effects</div>
+                </div>
+                <div class="flow-arrow-down">↓</div>
+                
+                <div class="flow-row">
+                    <div class="flow-box decision">📌 t-stat > 1,96? p < 0,05?</div>
+                </div>
+                <div class="flow-arrow-down">↓</div>
+                
+                <div class="flow-row">
+                    <div class="flow-box process">❌ Hipotesis Ditolak</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-box process">✅ Hipotesis Diterima</div>
+                </div>
+                <div class="flow-arrow-down">↓</div>
+                
+                <div class="flow-row">
+                    <div class="flow-box end">🏁 OUTPUT<br>Model Kompetensi SDM</div>
+                </div>
+            </div>
+            
+            <div class="interpretation-box">
+                <strong>Flow ini menunjukkan alur lengkap analisis PLS-SEM, dimulai dari input data, pengujian outer model (validitas & reliabilitas), pengujian inner model (R², Q², GoF), hingga bootstrapping untuk uji hipotesis.</strong>
+            </div>
+        </div>
+
+        <!-- TAB 2: OUTER MODEL -->
+        <div id="outer" class="tab-content">
+            <h2>🔍 Evaluasi Outer Model (Model Pengukuran)</h2>
+            
+            <div class="card">
+                <div class="function-box">
+                    <strong>🎯 FUNGSI:</strong> Memastikan instrumen penelitian (kuesioner) valid dan reliabel sebelum menguji hubungan antar variabel.
+                </div>
+                
+                <h3>📊 A. Uji Validitas Konvergen (Loading Factor)</h3>
+                <p><em>Fungsi: Mengukur sejauh mana indikator mencerminkan konstruk yang sama</em></p>
+                <p><strong>Kriteria:</strong> ≥ 0,7</p>
+                <div class="table-container">
+                    <table>
+                        <tr>
+                            <th>Variabel</th>
+                            <th>Range Loading</th>
+                            <th>Status</th>
+                        </tr>
+                        <tr><td>Pengalaman Kerja (PK/X1)</td><td>0,842 - 0,899</td><td><span class="status-valid">✓ VALID</span></td></tr>
+                        <tr><td>Motivasi (MO/X2)</td><td>0,863 - 0,911</td><td><span class="status-valid">✓ VALID</span></td></tr>
+                        <tr><td>Struktur Organisasi (SO/X3)</td><td>0,833 - 0,905</td><td><span class="status-valid">✓ VALID</span></td></tr>
+                        <tr><td>Budaya Organisasi (BO/X4)</td><td>0,838 - 0,898</td><td><span class="status-valid">✓ VALID</span></td></tr>
+                        <tr><td>Kebijakan Pemerintah (KP/X5)</td><td>0,801 - 0,899</td><td><span class="status-valid">✓ VALID</span></td></tr>
+                        <tr><td>Lembaga Pembanding (PP/X6)</td><td>0,825 - 0,877</td><td><span class="status-valid">✓ VALID</span></td></tr>
+                        <tr><td>Adopsi Teknologi (AT/Z)</td><td>0,822 - 0,866</td><td><span class="status-valid">✓ VALID</span></td></tr>
+                        <tr><td>Kompetensi SDM (KSDM/Y)</td><td>0,861 - 0,916</td><td><span class="status-valid">✓ VALID</span></td></tr>
+                    </table>
+                </div>
+                <div class="interpretation-box">
+                    <strong>Semua indikator memiliki loading factor > 0,7.</strong> Artinya, seluruh 80 item pertanyaan dalam kuesioner terbukti valid dan mampu mengukur variabel yang dimaksud dengan baik. Tidak ada indikator yang perlu dieliminasi.
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>📊 B. Uji Validitas Konstruk (AVE)</h3>
+                <p><em>Fungsi: Mengukur persentase varians indikator yang dijelaskan konstruk</em></p>
+                <div class="table-container">
+                    <table>
+                        <tr><th>Variabel</th><th>AVE</th><th>Status</th></tr>
+                        <tr><td>PK (X1)</td><td>0,765</td><td><span class="status-valid">✓ VALID</span></td></tr>
+                        <tr><td>MO (X2)</td><td>0,789</td><td><span class="status-valid">✓ VALID</span></td></tr>
+                        <tr><td>SO (X3)</td><td>0,762</td><td><span class="status-valid">✓ VALID</span></td></tr>
+                        <tr><td>BO (X4)</td><td>0,757</td><td><span class="status-valid">✓ VALID</span></td></tr>
+                        <tr><td>KP (X5)</td><td>0,719</td><td><span class="status-valid">✓ VALID</span></td></tr>
+                        <tr><td>PP (X6)</td><td>0,722</td><td><span class="status-valid">✓ VALID</span></td></tr>
+                        <tr><td>AT (Z)</td><td>0,708</td><td><span class="status-valid">✓ VALID</span></td></tr>
+                        <tr><td>KSDM (Y)</td><td>0,792</td><td><span class="status-valid">✓ VALID</span></td></tr>
+                    </table>
+                </div>
+                <div class="interpretation-box">
+                    <strong>Semua nilai AVE > 0,5.</strong> Artinya, setiap variabel laten mampu menjelaskan lebih dari 50% varians dari indikator-indikatornya. Ini menunjukkan bahwa konstruk memiliki validitas yang baik (rata-rata 75,2% informasi dari indikator dapat dijelaskan oleh variabelnya).
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>📊 C. Uji Reliabilitas</h3>
+                <p><em>Fungsi: Mengukur konsistensi internal instrumen</em></p>
+                <div class="table-container">
+                    <table>
+                        <tr><th>Variabel</th><th>Cronbach's α</th><th>CR</th><th>Status</th></tr>
+                        <tr><td>PK (X1)</td><td>0,966</td><td>0,970</td><td><span class="status-valid">✓ RELIABEL</span></td></tr>
+                        <tr><td>MO (X2)</td><td>0,970</td><td>0,974</td><td><span class="status-valid">✓ RELIABEL</span></td></tr>
+                        <tr><td>SO (X3)</td><td>0,965</td><td>0,970</td><td><span class="status-valid">✓ RELIABEL</span></td></tr>
+                        <tr><td>BO (X4)</td><td>0,964</td><td>0,969</td><td><span class="status-valid">✓ RELIABEL</span></td></tr>
+                        <tr><td>KP (X5)</td><td>0,957</td><td>0,962</td><td><span class="status-valid">✓ RELIABEL</span></td></tr>
+                        <tr><td>PP (X6)</td><td>0,958</td><td>0,963</td><td><span class="status-valid">✓ RELIABEL</span></td></tr>
+                        <tr><td>AT (Z)</td><td>0,954</td><td>0,960</td><td><span class="status-valid">✓ RELIABEL</span></td></tr>
+                        <tr><td>KSDM (Y)</td><td>0,971</td><td>0,974</td><td><span class="status-valid">✓ RELIABEL</span></td></tr>
+                    </table>
+                </div>
+                <div class="interpretation-box">
+                    <strong>Semua nilai Cronbach's Alpha > 0,9 dan Composite Reliability > 0,96.</strong> Artinya, instrumen penelitian memiliki tingkat reliabilitas SANGAT TINGGI. Jawaban responden konsisten dan dapat diandalkan (andal) untuk penelitian ini.
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>📊 D. Uji Multikolinieritas (VIF)</h3>
+                <p><em>Fungsi: Mendeteksi korelasi antar variabel independen</em></p>
+                <div class="table-container">
+                    <table>
+                        <tr><th>Variabel</th><th>VIF (untuk AT)</th><th>VIF (untuk KSDM)</th><th>Status</th></tr>
+                        <tr><td>PK (X1)</td><td>1,039</td><td>1,216</td><td><span class="status-valid">✓ BEBAS</span></td></tr>
+                        <tr><td>MO (X2)</td><td>1,061</td><td>1,176</td><td><span class="status-valid">✓ BEBAS</span></td></tr>
+                        <tr><td>SO (X3)</td><td>1,020</td><td>1,195</td><td><span class="status-valid">✓ BEBAS</span></td></tr>
+                        <tr><td>BO (X4)</td><td>1,063</td><td>1,163</td><td><span class="status-valid">✓ BEBAS</span></td></tr>
+                        <tr><td>KP (X5)</td><td>1,060</td><td>1,218</td><td><span class="status-valid">✓ BEBAS</span></td></tr>
+                        <tr><td>PP (X6)</td><td>1,074</td><td>1,146</td><td><span class="status-valid">✓ BEBAS</span></td></tr>
+                        <tr><td>AT (Z)</td><td>-</td><td>1,731</td><td><span class="status-valid">✓ BEBAS</span></td></tr>
+                    </table>
+                </div>
+                <div class="interpretation-box">
+                    <strong>Semua nilai VIF < 5 (bahkan < 2).</strong> Artinya, TIDAK TERDAPAT MULTIKOLINIERITAS antar variabel independen. Setiap variabel bebas berdiri sendiri dan memberikan kontribusi unik dalam menjelaskan variabel terikat, tanpa saling tumpang tindih.
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: INNER MODEL -->
+        <div id="inner" class="tab-content">
+            <h2>🏗️ Evaluasi Inner Model (Model Struktural)</h2>
+            
+            <div class="card">
+                <div class="function-box">
+                    <strong>🎯 FUNGSI:</strong> Menguji kekuatan prediktif model dan sejauh mana model cocok dengan data empiris.
+                </div>
+                
+                <h3>📊 A. R-Square (R²) - Koefisien Determinasi</h3>
+                <p><em>Fungsi: Mengukur seberapa besar variabel independen mampu menjelaskan variabel dependen</em></p>
+                <div class="table-container">
+                    <table>
+                        <tr><th>Variabel Endogen</th><th>R-Square</th><th>Kategori</th><th>Interpretasi</th></tr>
+                        <tr><td>Adopsi Teknologi (AT/Z)</td><td>0,422</td><td><span class="badge badge-warning">MODERAT</span></td><td>42,2% varians AT dijelaskan 6 variabel eksogen</td></tr>
+                        <tr><td><strong>Kompetensi SDM (KSDM/Y)</strong></td><td><strong>0,744</strong></td><td><span class="badge badge-success">KUAT</span></td><td><strong>74,4% varians KSDM dijelaskan model!</strong></td></tr>
+                    </table>
+                </div>
+                <div class="interpretation-box">
+                    <strong>R² Kompetensi SDM = 74,4% (Kuat).</strong> Artinya, model penelitian ini mampu menjelaskan 74,4% variasi atau perubahan yang terjadi pada Kompetensi SDM di Lembaga Perlindungan Konsumen. Hanya 25,6% sisanya dijelaskan oleh faktor lain di luar model. Ini menunjukkan bahwa model memiliki kekuatan prediktif yang sangat baik.
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>📊 B. Predictive Relevance (Q²)</h3>
+                <p><em>Fungsi: Menguji kemampuan model dalam memprediksi data (relevansi prediktif)</em></p>
+                <div class="formula">
+                    Q² = 1 - (1 - 0,422) × (1 - 0,744) = <strong>0,852</strong>
+                </div>
+                <p><span class="badge badge-success">✓ PREDIKTIF SANGAT KUAT (85,2%)</span></p>
+                <div class="interpretation-box">
+                    <strong>Q² = 0,852 (> 0).</strong> Artinya, model memiliki RELEVANSI PREDIKSI SANGAT KUAT. Model ini mampu memprediksi 85,2% fenomena kompetensi SDM. Jika diterapkan di populasi atau lokasi lain, model ini tetap akurat dalam memprediksi.
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>📊 C. Goodness of Fit (GoF)</h3>
+                <p><em>Fungsi: Menilai kesesuaian keseluruhan model dengan data empiris</em></p>
+                <div class="formula">
+                    GoF = √(0,752 × 0,583) = <strong>0,662</strong>
+                </div>
+                <p><span class="badge badge-success">✓ MODEL SANGAT FIT (GoF > 0,36)</span></p>
+                <div class="interpretation-box">
+                    <strong>GoF = 0,662 (> 0,36).</strong> Artinya, model penelitian ini SANGAT FIT dengan data empiris. Tidak ada perbedaan signifikan antara model teoritis yang dibangun dengan realitas di lapangan. Model ini layak digunakan sebagai representasi fenomena kompetensi SDM di Lembaga Perlindungan Konsumen.
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: UJI HIPOTESIS -->
+        <div id="hypothesis" class="tab-content">
+            <h2>✅ Pengujian Hipotesis (Bootstrapping)</h2>
+            
+            <div class="card">
+                <div class="function-box">
+                    <strong>🎯 FUNGSI:</strong> Menguji apakah hubungan antar variabel signifikan secara statistik (bukan kebetulan).
+                </div>
+                
+                <h3>📊 A. Pengaruh Langsung ke Adopsi Teknologi</h3>
+                <p><em>Kriteria: t-stat > 1,96 | p < 0,05</em></p>
+                <div class="table-container">
+                    <table>
+                        <tr><th>Hip</th><th>Hubungan</th><th>Koefisien</th><th>t-stat</th><th>p-value</th><th>Status</th></tr>
+                        <tr><td>H1</td><td>PK → AT</td><td>0,320</td><td>4,580</td><td>0,000</td><td><span class="status-valid">✓ Diterima</span></td></tr>
+                        <tr><td>H3</td><td>MO → AT</td><td>0,258</td><td>3,542</td><td>0,000</td><td><span class="status-valid">✓ Diterima</span></td></tr>
+                        <tr><td>H5</td><td>SO → AT</td><td>0,319</td><td>4,885</td><td>0,000</td><td><span class="status-valid">✓ Diterima</span></td></tr>
+                        <tr><td>H7</td><td>BO → AT</td><td>0,240</td><td>3,532</td><td>0,000</td><td><span class="status-valid">✓ Diterima</span></td></tr>
+                        <tr><td>H9</td><td>KP → AT</td><td>0,302</td><td>4,225</td><td>0,000</td><td><span class="status-valid">✓ Diterima</span></td></tr>
+                        <tr><td>H11</td><td>PP → AT</td><td>0,204</td><td>2,588</td><td>0,010</td><td><span class="status-valid">✓ Diterima</span></td></tr>
+                    </table>
+                </div>
+                <div class="interpretation-box">
+                    <strong>Semua 6 hipotesis pengaruh ke Adopsi Teknologi DITERIMA.</strong> Artinya, Pengalaman Kerja, Motivasi, Struktur Organisasi, Budaya Organisasi, Kebijakan Pemerintah, dan Lembaga Pembanding terbukti secara statistik berpengaruh positif terhadap Adopsi Teknologi. Semakin baik faktor-faktor tersebut, semakin tinggi adopsi teknologi di LPK.
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>📊 B. Pengaruh Langsung ke Kompetensi SDM</h3>
+                <p><em>(Tanpa Rank)</em></p>
+                <div class="table-container">
+                    <table>
+                        <tr><th>Hip</th><th>Hubungan</th><th>Koefisien</th><th>t-stat</th><th>p-value</th><th>Status</th></tr>
+                        <tr><td>H2</td><td>PK → KSDM</td><td>0,268</td><td>4,744</td><td>0,000</td><td><span class="status-valid">✓ Diterima</span></td></tr>
+                        <tr><td>H4</td><td>MO → KSDM</td><td>0,243</td><td>4,234</td><td>0,000</td><td><span class="status-valid">✓ Diterima</span></td></tr>
+                        <tr><td>H6</td><td>SO → KSDM</td><td>0,292</td><td>5,650</td><td>0,000</td><td><span class="status-valid">✓ Diterima</span></td></tr>
+                        <tr><td>H8</td><td>BO → KSDM</td><td>0,220</td><td>4,498</td><td>0,000</td><td><span class="status-valid">✓ Diterima</span></td></tr>
+                        <tr><td>H10</td><td>KP → KSDM</td><td><strong>0,322</strong></td><td>6,173</td><td>0,000</td><td><span class="status-valid">✓ Diterima</span></td></tr>
+                        <tr><td>H12</td><td>PP → KSDM</td><td>0,283</td><td>5,901</td><td>0,000</td><td><span class="status-valid">✓ Diterima</span></td></tr>
+                        <tr><td>H13</td><td>AT → KSDM</td><td>0,302</td><td>5,028</td><td>0,000</td><td><span class="status-valid">✓ Diterima</span></td></tr>
+                    </table>
+                </div>
+                <div class="interpretation-box">
+                    <strong>Semua 7 hipotesis pengaruh langsung ke Kompetensi SDM DITERIMA.</strong> Artinya, Pengalaman Kerja, Motivasi, Struktur Organisasi, Budaya Organisasi, Kebijakan Pemerintah, Lembaga Pembanding, dan Adopsi Teknologi terbukti berpengaruh positif terhadap Kompetensi SDM. Kebijakan Pemerintah memiliki pengaruh terbesar (0,322), diikuti Adopsi Teknologi (0,302) dan Struktur Organisasi (0,292).
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>📊 C. Pengaruh Tidak Langsung (Mediasi)</h3>
+                <p><em>Fungsi: Menguji apakah Adopsi Teknologi menjadi perantara (mediator) hubungan</em></p>
+                <div class="table-container">
+                    <table>
+                        <tr><th>Hip</th><th>Jalur Mediasi</th><th>Koefisien</th><th>t-stat</th><th>p-value</th><th>Status</th></tr>
+                        <tr><td>H14</td><td>PK → AT → KSDM</td><td>0,097</td><td>3,582</td><td>0,000</td><td><span class="status-valid">✓ Diterima</span></td></tr>
+                        <tr><td>H15</td><td>MO → AT → KSDM</td><td>0,078</td><td>3,143</td><td>0,002</td><td><span class="status-valid">✓ Diterima</span></td></tr>
+                        <tr><td>H16</td><td>SO → AT → KSDM</td><td>0,096</td><td>3,501</td><td>0,000</td><td><span class="status-valid">✓ Diterima</span></td></tr>
+                        <tr><td>H17</td><td>BO → AT → KSDM</td><td>0,073</td><td>2,747</td><td>0,006</td><td><span class="status-valid">✓ Diterima</span></td></tr>
+                        <tr><td>H18</td><td>KP → AT → KSDM</td><td>0,091</td><td>3,292</td><td>0,001</td><td><span class="status-valid">✓ Diterima</span></td></tr>
+                        <tr><td>H19</td><td>PP → AT → KSDM</td><td>0,062</td><td>2,361</td><td>0,018</td><td><span class="status-valid">✓ Diterima</span></td></tr>
+                    </table>
+                </div>
+                <div class="interpretation-box">
+                    <strong>Semua 6 hipotesis mediasi DITERIMA.</strong> Artinya, Adopsi Teknologi terbukti menjadi MEDIATOR yang memediasi pengaruh seluruh variabel eksogen terhadap Kompetensi SDM. Pengalaman Kerja, Motivasi, Struktur, Budaya, Kebijakan, dan Lembaga Pembanding tidak hanya berpengaruh langsung, tetapi juga berpengaruh tidak langsung melalui peningkatan Adopsi Teknologi.
+                </div>
+            </div>
+            
+            <div class="insight-box">
+                <strong>🎯 KESIMPULAN HIPOTESIS:</strong> Seluruh 19 hipotesis DITERIMA! Adopsi Teknologi terbukti sebagai MEDIATOR KUNCI yang menerjemahkan pengaruh faktor individu, organisasi, dan eksternal menjadi peningkatan Kompetensi SDM.
+            </div>
+        </div>
+
+        <!-- TAB 5: HASIL AKHIR -->
+        <div id="results" class="tab-content">
+            <h2>🎯 Model Persamaan Struktural & Kesimpulan</h2>
+            
+            <div class="card">
+                <h3>📌 Model 1: Adopsi Teknologi</h3>
+                <div class="formula">
+                    AT = 0,320PK + 0,258MO + 0,319SO + 0,240BO + 0,302KP + 0,204PP
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>📌 Model 2: Kompetensi SDM</h3>
+                <div class="formula">
+                    KSDM = 0,268PK + 0,243MO + 0,292SO + 0,220BO + 0,322KP + 0,283PP + 0,302AT
+                </div>
+            </div>
+
+            <!-- BEST MODEL SECTION -->
+            <div class="best-model">
+                <h3 style="color: #b8860b; text-align: center;">🏆 MODEL PALING FIT DENGAN JUDUL PENELITIAN</h3>
+                <div style="display: flex; align-items: center; justify-content: center; margin: 20px 0;">
+                    <div style="font-size: 60px; margin-right: 20px;">🏆</div>
+                    <div style="font-size: 24px; font-weight: bold; color: #b8860b;">"Pemodelan Kompetensi SDM"</div>
+                </div>
+                
+                <div style="background: gold; padding: 15px; border-radius: 10px; text-align: center; font-size: 18px; margin: 20px 0;">
+                    <strong>MODEL TERBAIK: Model 2 (Kompetensi SDM)</strong>
+                </div>
+                
+                <div class="table-container">
+                    <table>
+                        <tr><th>Kriteria</th><th>Model 1 (AT)</th><th><strong>Model 2 (KSDM)</strong></th></tr>
+                        <tr><td>R-Square</td><td>0,422 (Moderat)</td><td><strong>0,744 (KUAT)</strong></td></tr>
+                        <tr><td>Kemampuan Prediktif</td><td>42,2%</td><td><strong>74,4%</strong></td></tr>
+                        <tr><td>Kesesuaian dengan Judul</td><td>Variabel Mediasi</td><td><strong>VARIABEL UTAMA</strong></td></tr>
+                        <tr><td>Jumlah Prediktor</td><td>6 variabel</td><td><strong>7 variabel (lengkap)</strong></td></tr>
+                        <tr><td>Interpretasi</td><td>Menjelaskan adopsi teknologi</td><td><strong>Menjelaskan kompetensi SDM (sesuai judul)</strong></td></tr>
+                    </table>
+                </div>
+                
+                <div style="margin-top: 20px; padding: 15px; background: #e6f3ff; border-radius: 10px;">
+                    <p style="font-size: 16px;"><strong>🔍 INTERPRETASI:</strong> Model 2 (Kompetensi SDM) adalah model yang paling fit dengan judul penelitian karena:</p>
+                    <ul style="margin-top: 10px; padding-left: 20px;">
+                        <li><strong>Judul penelitian:</strong> "Pemodelan Kompetensi SDM pada Lembaga Perlindungan Konsumen"</li>
+                        <li><strong>Model 2 menjawab:</strong> Apa saja faktor yang mempengaruhi Kompetensi SDM?</li>
+                        <li><strong>R² = 74,4%</strong> → Model mampu menjelaskan hampir 3/4 varians kompetensi SDM</li>
+                        <li><strong>GoF = 0,662</strong> → Model sangat fit dengan data empiris</li>
+                        <li><strong>Semua faktor terintegrasi:</strong> Individu, Organisasi, Eksternal + Mediasi Teknologi</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>📊 RINGKASAN HASIL ANALISIS</h3>
+                <div class="table-container">
+                    <table>
+                        <tr><th>Parameter</th><th>Hasil</th><th>Fungsi</th><th>Interpretasi</th></tr>
+                        <tr><td>Loading Factor</td><td>0,801 - 0,916</td><td>Validitas Konvergen</td><td>Semua indikator valid mengukur konstruknya</td></tr>
+                        <tr><td>AVE</td><td>0,708 - 0,792</td><td>Validitas Konstruk</td><td>Konstruk mampu menjelaskan >70% varians indikator</td></tr>
+                        <tr><td>Reliabilitas</td><td>0,954 - 0,974</td><td>Konsistensi Internal</td><td>Instrumen SANGAT RELIABEL (konsisten)</td></tr>
+                        <tr><td>VIF</td><td>1,020 - 1,731</td><td>Multikolinieritas</td><td>Tidak ada korelasi antar variabel bebas</td></tr>
+                        <tr><td>R² (KSDM)</td><td><strong>0,744</strong></td><td>Kekuatan Prediktif</td><td>Model mampu menjelaskan 74,4% varians KSDM</td></tr>
+                        <tr><td>Q²</td><td><strong>0,852</strong></td><td>Relevansi Prediktif</td><td>Model memiliki kemampuan prediksi SANGAT KUAT</td></tr>
+                        <tr><td>GoF</td><td><strong>0,662</strong></td><td>Kesesuaian Model</td><td>Model SANGAT FIT dengan data empiris</td></tr>
+                        <tr><td>Hipotesis</td><td>19/19 Diterima</td><td>Uji Signifikansi</td><td>Semua hubungan yang dihipotesiskan terbukti</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="insight-box">
+                <h3 style="color: white; margin-bottom: 15px;">🎯 KESIMPULAN AKHIR</h3>
+                <p style="font-size: 18px; margin: 10px 0;"><strong>Model Kompetensi SDM (Y) adalah model yang PALING FIT dengan judul penelitian</strong></p>
+                <p style="font-size: 16px; margin: 10px 0;">Dengan R² = 74,4% dan GoF = 0,662, model ini mampu menjelaskan fenomena kompetensi SDM di Lembaga Perlindungan Konsumen secara komprehensif, mencakup faktor individu, organisasi, eksternal, dan adopsi teknologi sebagai mediator kunci.</p>
+                <hr style="border-color: rgba(255,255,255,0.3); margin: 20px 0;">
+                <p style="font-size: 16px;"><strong>🔑 KEY FINDINGS:</strong> Kebijakan Pemerintah (0,322) & Adopsi Teknologi (0,302) adalah faktor terkuat pembentuk kompetensi SDM. Seluruh 19 hipotesis diterima, menegaskan bahwa model ini valid, reliabel, dan fit untuk menjelaskan kompetensi SDM di Lembaga Perlindungan Konsumen.</p>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <div style="background: #2d3748; color: white; padding: 20px; border-radius: 10px; display: inline-block;">
+                    <h3 style="color: white; margin-bottom: 10px;">🎓 NOVRIANSYAH (92224016)</h3>
+                    <p style="color: #ddd;">Program Studi Magister Manajemen</p>
+                    <p style="color: #ddd;">Universitas Muhammadiyah Palembang</p>
+                    <p style="color: #ffd700; margin-top: 10px; font-size: 20px;">✨ SELAMAT SIDANG! ✨</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tabbuttons;
+            
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+            
+            tabbuttons = document.getElementsByClassName("tab-button");
+            for (i = 0; i < tabbuttons.length; i++) {
+                tabbuttons[i].classList.remove("active");
+            }
+            
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+    </script>
+</body>
+</html>
